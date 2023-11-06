@@ -1,7 +1,9 @@
 from flask import Flask, request
 from utils import commit_sql
+from createtable import create_table
 
 app = Flask(__name__)
+create_table()
 
 
 @app.route('/phone/create')
@@ -9,10 +11,12 @@ def phones_create():
     phone_value = request.args.get('Phone', '111')
 
     sql = f"""
-    INSERT INTO Phones (Phone)
+    INSERT INTO Phones (phoneValue)
     VALUES ({phone_value});
     """
     commit_sql(sql)
+
+    return 'phones_create'
 
 
 @app.route('/phone/read')
@@ -39,8 +43,8 @@ def phones_update():
 
     sql = f"""
     UPDATE Phones
-    SET phone = '{phone_value}'
-    WHERE id = {phone_id};
+    SET phoneValue = '{phone_value}'
+    WHERE phoneID = {phone_id};
     """
     commit_sql(sql)
 
@@ -53,7 +57,7 @@ def phones_delete():
 
     sql = f"""
     DELETE FROM Phones
-    WHERE id = {phone_id};
+    WHERE phoneID = {phone_id};
     """
     commit_sql(sql)
 
