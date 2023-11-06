@@ -1,16 +1,20 @@
-def create_table() -> None:
-    import sqlite3
-    con = sqlite3.connect('phones.db')
-    cur = con.cursor()
+import sqlite3
 
-    sql = """
-        CREATE TABLE IF NOT EXISTS Phones (
-        phoneID INTEGER PRIMARY KEY,
-        phoneValue varchar(255),
-        contactName varchar(255)
-        );
-        """
-    cur.execute(sql)
+connection = sqlite3.connect('phones.db')
 
-    con.commit()
-    con.close()
+cursor = connection.cursor()
+
+cursor.execute("DROP TABLE IF EXISTS PHONES")
+
+
+table = """ CREATE TABLE PHONES (
+			phone CHAR(255) NOT NULL,
+			id INTEGER PRIMARY KEY,
+			name VARCHAR(25)
+		); """
+
+cursor.execute(table)
+
+print("Table is Ready")
+
+connection.close()
